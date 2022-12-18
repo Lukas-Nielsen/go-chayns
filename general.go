@@ -1,9 +1,34 @@
 package chayns
 
-type Conf struct {
-	LocationID int
-	TappID     int
-	Secret     string
+type conf struct {
+	locationID int
+	tappID     int
+	secret     string
+}
+
+// create new conf
+func NewConf(location int) *conf {
+	return &conf{
+		locationID: location,
+	}
+}
+
+// set locationId of conf
+func (c *conf) SetLocation(location int) *conf {
+	c.locationID = location
+	return c
+}
+
+// set tappId of conf
+func (c *conf) SetTapp(tapp int) *conf {
+	c.tappID = tapp
+	return c
+}
+
+// set secret of conf
+func (c *conf) SetSecret(secret string) *conf {
+	c.secret = secret
+	return c
 }
 
 // struct for the error messages

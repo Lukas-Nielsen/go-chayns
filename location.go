@@ -14,11 +14,11 @@ type location struct {
 // getting the location info
 //
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Location
-func (conf *Conf) Location() (location, error) {
+func (c *conf) Location() (location, error) {
 	var result struct {
 		Data []location `json:"data"`
 	}
-	if err := conf.basicRequest(&result, "", nil, "GET"); err != nil {
+	if err := c.basicRequest(&result, "", nil, "GET"); err != nil {
 		return location{}, err
 	}
 	return result.Data[0], nil

@@ -13,7 +13,7 @@ type groupData struct {
 // get data all groups
 //
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Group#get-all-uac-groups
-func (conf *Conf) Groups(filter ...map[string]string) ([]uac, error) {
+func (c *conf) Groups(filter ...map[string]string) ([]uac, error) {
 	filterString := ""
 	if len(filter) == 1 && len(filter[0]) > 0 {
 		params := url.Values{}
@@ -26,7 +26,7 @@ func (conf *Conf) Groups(filter ...map[string]string) ([]uac, error) {
 	var result struct {
 		Data []uac `json:"data"`
 	}
-	if err := conf.basicRequest(&result, "/UAC"+filterString, nil, "GET"); err != nil {
+	if err := c.basicRequest(&result, "/UAC"+filterString, nil, "GET"); err != nil {
 		return []uac{}, err
 	}
 	return result.Data, nil
@@ -35,11 +35,11 @@ func (conf *Conf) Groups(filter ...map[string]string) ([]uac, error) {
 // get data of given group
 //
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Group#get-uac-group
-func (conf *Conf) Group(groupId int) (uac, error) {
+func (c *conf) Group(groupId int) (uac, error) {
 	var result struct {
 		Data []uac `json:"data"`
 	}
-	if err := conf.basicRequest(&result, "/UAC/"+fmt.Sprint(groupId), nil, "GET"); err != nil {
+	if err := c.basicRequest(&result, "/UAC/"+fmt.Sprint(groupId), nil, "GET"); err != nil {
 		return uac{}, err
 	}
 	return result.Data[0], nil
@@ -48,7 +48,7 @@ func (conf *Conf) Group(groupId int) (uac, error) {
 // create a new group
 //
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Group#create-uac-group
-func (conf *Conf) NewGroup(name string, showName string) (uac, error) {
+func (c *conf) NewGroup(name string, showName string) (uac, error) {
 	if len(name) == 0 {
 		return uac{}, fmt.Errorf("'name' must not be empty")
 	}
@@ -59,7 +59,7 @@ func (conf *Conf) NewGroup(name string, showName string) (uac, error) {
 	var result struct {
 		Data []uac `json:"data"`
 	}
-	if err := conf.basicRequest(&result, "/UAC", groupData{ShowName: showName, Name: name}, "POST"); err != nil {
+	if err := c.basicRequest(&result, "/UAC", groupData{ShowName: showName, Name: name}, "POST"); err != nil {
 		return uac{}, err
 	}
 	return result.Data[0], nil
@@ -68,11 +68,11 @@ func (conf *Conf) NewGroup(name string, showName string) (uac, error) {
 // modify a group
 //
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Group#modify-uac-group
-func (conf *Conf) ModifyGroup(groupId int, name string, showName string) (uac, error) {
+func (c *conf) ModifyGroup(groupId int, name string, showName string) (uac, error) {
 	var result struct {
 		Data []uac `json:"data"`
 	}
-	if err := conf.basicRequest(&result, "/UAC/"+fmt.Sprint(groupId), groupData{ShowName: showName, Name: name}, "PATCH"); err != nil {
+	if err := c.basicRequest(&result, "/UAC/"+fmt.Sprint(groupId), groupData{ShowName: showName, Name: name}, "PATCH"); err != nil {
 		return uac{}, err
 	}
 	return result.Data[0], nil
@@ -81,12 +81,14 @@ func (conf *Conf) ModifyGroup(groupId int, name string, showName string) (uac, e
 // delete a group
 //
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Group#delete-uac-group
-func (conf *Conf) DeleteGroup(groupId int) (bool, error) {
+func (c *conf) DeleteGroup(groupId int) (bool, error) {
 	var result struct {
-		Data []any `json:"data"`
+		Data []struct {
+			Success bool `json:"success"`
+		} `json:"data"`
 	}
-	if err := conf.basicRequest(&result, "/UAC/"+fmt.Sprint(groupId), nil, "DELETE"); err != nil {
+	if err := c.basicRequest(&result, "/UAC/"+fmt.Sprint(groupId), nil, "DELETE"); err != nil {
 		return false, err
 	}
-	return true, nil
+	return result.Data[0].Success, nil
 }

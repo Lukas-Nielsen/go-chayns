@@ -31,13 +31,13 @@ type accessToken struct {
 // getting the page acces token based on the given permission
 //
 // https://github.com/TobitSoftware/chayns-backend/wiki/Authorization
-func (conf *Conf) NewPageAccessToken(pem ...string) (string, error) {
+func (c *conf) NewPageAccessToken(pem ...string) (string, error) {
 	var result struct {
 		Data []struct {
 			PageAccessToken string `json:"pageAccessToken"`
 		} `json:"data,omitempty"`
 	}
-	if err := conf.basicRequest(&result, "/AccessToken", permission{Data: pem}, "POST"); err != nil {
+	if err := c.basicRequest(&result, "/AccessToken", permission{Data: pem}, "POST"); err != nil {
 		return "", err
 	}
 	return result.Data[0].PageAccessToken, nil
@@ -46,16 +46,16 @@ func (conf *Conf) NewPageAccessToken(pem ...string) (string, error) {
 // validate the given access token (user or page)
 //
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-AccessToken#read-accesstoken
-func (conf *Conf) ValidateAccessToken(token string, uac ...int) (accessToken, error) {
-	var result struct {
-		Data []accessToken `json:"data"`
-	}
-
+func (c *conf) ValidateAccessToken(token string, uac ...int) (accessToken, error) {
 	path := "/AccessToken"
 	if len(uac) > 0 {
 		path = "?RequiredUacGroups=" + strings.Join(strings.Split(fmt.Sprint(uac), " "), ",")
 	}
-	if err := conf.bearerRequest(token, &result, path, nil, "GET"); err != nil {
+
+	var result struct {
+		Data []accessToken `json:"data"`
+	}
+	if err := c.bearerRequest(token, &result, path, nil, "GET"); err != nil {
 		return accessToken{}, err
 	}
 	return result.Data[0], nil

@@ -23,11 +23,13 @@ import chayns "github.com/Lukas-Nielsen/go-chayns"
 for all actions you need a `locationId` and for the most actions you need a `tappId` and a `secret`
 
 ```go
-conf := chanys.Conf{
-    LocationId: <your locationId>,
-    TappId: <your tappId>,
-    Secret: <your secret>,
-}
+// conf
+c := chayns.NewConf(<locationId>)
+
+c.
+    SetLocation(<locationId>).
+    SetTapp(<tappId>).
+    SetSecret("<secret>")
 ```
 
 ### filter
@@ -49,11 +51,11 @@ filter := map[string]string{
 ```go
 // generate page accesstoken
 // string, error
-token, err := conf.NewPageAccessToken(..."<permission>")
+result, err := c.NewPageAccessToken(..."<permission>")
 
 // validate an accesstoken
 // accessToken (information about the token), error
-tokenStruct, err := conf.ValidateAccessToken("<your token>", ...<groupId>)
+result, err := c.ValidateAccessToken("<your token>", ...<groupId>)
 ```
 
 #### user
@@ -61,23 +63,23 @@ tokenStruct, err := conf.ValidateAccessToken("<your token>", ...<groupId>)
 ```go
 // get all users
 // []user, error
-users, err := conf.Users(...filter)
+result, err := c.Users(...filter)
 
 // get user by id
 // user, error
-user, err := conf.User(<userId>)
+result, err := c.User(<userId>)
 
 // get groups of user by id
 // []uac, error
-uacs, err := conf.UserUAC(<userId>, ...filter)
+result, err := c.UserUAC(<userId>, ...filter)
 
 // get devices of user by id
 // []device, error
-devices, err := conf.UserDevices(<userId>, ...filter)
+result, err := c.UserDevices(<userId>, ...filter)
 
 // get device by id of user by id
 // []device, error
-device, err := conf.UserDevice(<userId>, <deviceId>)
+result, err := c.UserDevice(<userId>, <deviceId>)
 ```
 
 #### group
@@ -85,23 +87,23 @@ device, err := conf.UserDevice(<userId>, <deviceId>)
 ```go
 // get all groups
 // []uac, error
-uacs, err := conf.Groups(...filter)
+result, err := c.Groups(...filter)
 
 // get group by id
 // uac, error
-uac, err := conf.Group(<goupId>)
+result, err := c.Group(<goupId>)
 
 // create a new group
 // uac, error
-uac, err := conf.NewGroup("<name>", "<showName>")
+result, err := c.NewGroup("<name>", "<showName>")
 
 // modify a group
 // uac, error
-uac, err := conf.ModifyGroup(<groupId>, "<name>", "<showName>")
+result, err := c.ModifyGroup(<groupId>, "<name>", "<showName>")
 
 // delete a group
 // bool, error
-bool, err := conf.DeleteGroup(<groupId>)
+result, err := c.DeleteGroup(<groupId>)
 ```
 
 #### group member
@@ -109,19 +111,19 @@ bool, err := conf.DeleteGroup(<groupId>)
 ```go
 // get all members of group by id
 // []user, error
-users, err := conf.Members(<groupId>, ...filter)
+result, err := c.Members(<groupId>, ...filter)
 
 // get member by id of group by id
 // user, error
-user, err := conf.Member(<goupId>, <userId>)
+result, err := c.Member(<goupId>, <userId>)
 
 // add user to group
 // user, error
-user, err := conf.AddUserUac(<groupId>, <userId>)
+result, err := c.AddUserUac(<groupId>, <userId>)
 
 // remove user from group
 // bool, error
-bool, err := conf.RemoveUserUac(<groupId>, <userId>)
+result, err := c.RemoveUserUac(<groupId>, <userId>)
 ```
 
 #### device
@@ -129,7 +131,7 @@ bool, err := conf.RemoveUserUac(<groupId>, <userId>)
 ```go
 // get device by id
 // device, error
-device, err := conf.Device(<deviceId>)
+result, err := c.Device(<deviceId>)
 ```
 
 #### location
@@ -137,7 +139,7 @@ device, err := conf.Device(<deviceId>)
 ```go
 // get information about the location
 // location, error
-location, err := conf.Location()
+result, err := c.Location()
 ```
 
 #### push
@@ -145,17 +147,29 @@ location, err := conf.Location()
 ```go
 // send push notification to group
 // bool, error
-bool, err := conf.PushGroup(<groupId>, "<message>")
+result, err := c.PushGroup(<groupId>, "<message>")
 
 // send push notification to user
 // bool, error
-bool, err := conf.PushUser(<userId>, "<message>")
+result, err := c.PushUser(<userId>, "<message>")
 ```
 
 #### intercom
 
 ```go
-// send a intercom
+// intercom
+i := c.NewIntercom("<message>")
+
+i.
+    AddUser(...<userId>).
+    AddGroup(...<groupId>).
+    AddLocation(...<locationId>).
+    AddImage(..."<url>").
+    SetAccessToken("<token>").
+    SetThreadName("<name>").
+    SetGroupChat(boolean)
+
+// send the message
 // bool, error
-bool, err := conf.Intercom(data Intercom)
+result, err := i.Send()
 ```

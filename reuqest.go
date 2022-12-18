@@ -7,21 +7,24 @@ import (
 	"github.com/go-resty/resty/v2"
 )
 
-func (conf *Conf) basicRequest(result any, path string, data any, method string) error {
-	if conf.LocationID == 0 {
-		return fmt.Errorf("'LocationID' must not be empty")
+func (c *conf) basicRequest(result any, path string, data any, method string) error {
+	if c.locationID == 0 {
+		return fmt.Errorf("'locationID' must not be empty")
 	}
-	if conf.TappID == 0 {
-		return fmt.Errorf("'TappID' must not be empty")
+	if c.tappID == 0 {
+		return fmt.Errorf("'tappID' must not be empty")
 	}
-	if len(conf.Secret) == 0 {
-		return fmt.Errorf("'Secret' must not be empty")
+	if len(c.secret) == 0 {
+		return fmt.Errorf("'secret' must not be empty")
 	}
 	var respError respError
+
+	url := baseUrl + version + "/" + fmt.Sprint(c.locationID) + path
+
 	client := resty.New()
 
 	req := client.R().
-		SetHeader("Authorization", "Basic "+b64.StdEncoding.EncodeToString([]byte(fmt.Sprint(conf.TappID)+":"+conf.Secret))).
+		SetHeader("Authorization", "Basic "+b64.StdEncoding.EncodeToString([]byte(fmt.Sprint(c.tappID)+":"+c.secret))).
 		SetResult(&result).
 		SetError(&respError)
 
@@ -34,7 +37,7 @@ func (conf *Conf) basicRequest(result any, path string, data any, method string)
 				SetBody(data)
 		}
 		_, err = req.
-			Post(baseUrl + version + "/" + fmt.Sprint(conf.LocationID) + path)
+			Post(url)
 
 	case "PATCH":
 		if data != nil {
@@ -42,15 +45,15 @@ func (conf *Conf) basicRequest(result any, path string, data any, method string)
 				SetBody(data)
 		}
 		_, err = req.
-			Patch(baseUrl + version + "/" + fmt.Sprint(conf.LocationID) + path)
+			Patch(url)
 
 	case "GET":
 		_, err = req.
-			Get(baseUrl + version + "/" + fmt.Sprint(conf.LocationID) + path)
+			Get(url)
 
 	case "DELETE":
 		_, err = req.
-			Delete(baseUrl + version + "/" + fmt.Sprint(conf.LocationID) + path)
+			Delete(url)
 	}
 	if err != nil {
 		return err
@@ -62,11 +65,14 @@ func (conf *Conf) basicRequest(result any, path string, data any, method string)
 	return err
 }
 
-func (conf *Conf) bearerRequest(token string, result any, path string, data any, method string) error {
-	if conf.LocationID == 0 {
-		return fmt.Errorf("'LocationID' must not be empty")
+func (c *conf) bearerRequest(token string, result any, path string, data any, method string) error {
+	if c.locationID == 0 {
+		return fmt.Errorf("'locationID' must not be empty")
 	}
 	var respError respError
+
+	url := baseUrl + version + "/" + fmt.Sprint(c.locationID) + path
+
 	client := resty.New()
 
 	req := client.R().
@@ -83,11 +89,11 @@ func (conf *Conf) bearerRequest(token string, result any, path string, data any,
 				SetBody(data)
 		}
 		_, err = req.
-			Post(baseUrl + version + "/" + fmt.Sprint(conf.LocationID) + path)
+			Post(url)
 
 	case "GET":
 		_, err = req.
-			Get(baseUrl + version + "/" + fmt.Sprint(conf.LocationID) + path)
+			Get(url)
 	}
 	if err != nil {
 		return err
