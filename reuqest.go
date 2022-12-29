@@ -7,6 +7,13 @@ import (
 	"github.com/go-resty/resty/v2"
 )
 
+const (
+	POST   string = "POST"
+	GET    string = "GET"
+	PATCH  string = "PATCH"
+	DELETE string = "DELETE"
+)
+
 func (c *conf) basicRequest(result any, path string, data any, method string) error {
 	if c.locationID == 0 {
 		return fmt.Errorf("'locationID' must not be empty")
@@ -31,7 +38,7 @@ func (c *conf) basicRequest(result any, path string, data any, method string) er
 	var err error
 	err = nil
 	switch method {
-	case "POST":
+	case POST:
 		if data != nil {
 			req = req.
 				SetBody(data)
@@ -39,7 +46,7 @@ func (c *conf) basicRequest(result any, path string, data any, method string) er
 		_, err = req.
 			Post(url)
 
-	case "PATCH":
+	case PATCH:
 		if data != nil {
 			req = req.
 				SetBody(data)
@@ -47,11 +54,11 @@ func (c *conf) basicRequest(result any, path string, data any, method string) er
 		_, err = req.
 			Patch(url)
 
-	case "GET":
+	case GET:
 		_, err = req.
 			Get(url)
 
-	case "DELETE":
+	case DELETE:
 		_, err = req.
 			Delete(url)
 	}
@@ -83,7 +90,7 @@ func (c *conf) bearerRequest(token string, result any, path string, data any, me
 	var err error
 	err = nil
 	switch method {
-	case "POST":
+	case POST:
 		if data != nil {
 			req = req.
 				SetBody(data)
@@ -91,7 +98,7 @@ func (c *conf) bearerRequest(token string, result any, path string, data any, me
 		_, err = req.
 			Post(url)
 
-	case "GET":
+	case GET:
 		_, err = req.
 			Get(url)
 	}

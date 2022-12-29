@@ -26,7 +26,7 @@ func (c *conf) Groups(filter ...map[string]string) ([]uac, error) {
 	var result struct {
 		Data []uac `json:"data"`
 	}
-	if err := c.basicRequest(&result, "/UAC"+filterString, nil, "GET"); err != nil {
+	if err := c.basicRequest(&result, "/UAC"+filterString, nil, GET); err != nil {
 		return []uac{}, err
 	}
 	return result.Data, nil
@@ -39,7 +39,7 @@ func (c *conf) Group(groupId int) (uac, error) {
 	var result struct {
 		Data []uac `json:"data"`
 	}
-	if err := c.basicRequest(&result, "/UAC/"+fmt.Sprint(groupId), nil, "GET"); err != nil {
+	if err := c.basicRequest(&result, "/UAC/"+fmt.Sprint(groupId), nil, GET); err != nil {
 		return uac{}, err
 	}
 	return result.Data[0], nil
@@ -59,7 +59,7 @@ func (c *conf) NewGroup(name string, showName string) (uac, error) {
 	var result struct {
 		Data []uac `json:"data"`
 	}
-	if err := c.basicRequest(&result, "/UAC", groupData{ShowName: showName, Name: name}, "POST"); err != nil {
+	if err := c.basicRequest(&result, "/UAC", groupData{ShowName: showName, Name: name}, POST); err != nil {
 		return uac{}, err
 	}
 	return result.Data[0], nil
@@ -72,7 +72,7 @@ func (c *conf) ModifyGroup(groupId int, name string, showName string) (uac, erro
 	var result struct {
 		Data []uac `json:"data"`
 	}
-	if err := c.basicRequest(&result, "/UAC/"+fmt.Sprint(groupId), groupData{ShowName: showName, Name: name}, "PATCH"); err != nil {
+	if err := c.basicRequest(&result, "/UAC/"+fmt.Sprint(groupId), groupData{ShowName: showName, Name: name}, PATCH); err != nil {
 		return uac{}, err
 	}
 	return result.Data[0], nil
@@ -87,7 +87,7 @@ func (c *conf) DeleteGroup(groupId int) (bool, error) {
 			Success bool `json:"success"`
 		} `json:"data"`
 	}
-	if err := c.basicRequest(&result, "/UAC/"+fmt.Sprint(groupId), nil, "DELETE"); err != nil {
+	if err := c.basicRequest(&result, "/UAC/"+fmt.Sprint(groupId), nil, DELETE); err != nil {
 		return false, err
 	}
 	return result.Data[0].Success, nil

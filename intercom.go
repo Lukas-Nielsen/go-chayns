@@ -108,7 +108,7 @@ func (i *intercom) Send() (bool, error) {
 			Success bool `json:"success"`
 		} `json:"data"`
 	}
-	if err := i.basicRequest(&result, "/Intercom", i, "POST"); err != nil {
+	if err := i.basicRequest(&result, "/Intercom", i, POST); err != nil {
 		return false, err
 	}
 	return result.Data[0].Success, nil

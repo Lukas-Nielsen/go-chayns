@@ -15,7 +15,7 @@ func (c *conf) PushGroup(groupId int, msg string) (bool, error) {
 			Success bool `json:"success"`
 		} `json:"data"`
 	}
-	if err := c.basicRequest(&result, "/UAC/"+fmt.Sprint(groupId)+"/Push", alert{Alert: msg}, "POST"); err != nil {
+	if err := c.basicRequest(&result, "/UAC/"+fmt.Sprint(groupId)+"/Push", alert{Alert: msg}, POST); err != nil {
 		return false, err
 	}
 	return result.Data[0].Success, nil
@@ -30,7 +30,7 @@ func (c *conf) PushUser(userId int, msg string) (bool, error) {
 			Success bool `json:"success"`
 		} `json:"data"`
 	}
-	if err := c.basicRequest(&result, "/User/"+fmt.Sprint(userId)+"/Push", alert{Alert: msg}, "POST"); err != nil {
+	if err := c.basicRequest(&result, "/User/"+fmt.Sprint(userId)+"/Push", alert{Alert: msg}, POST); err != nil {
 		return false, err
 	}
 	return result.Data[0].Success, nil

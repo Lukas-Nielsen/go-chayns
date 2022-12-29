@@ -37,7 +37,7 @@ func (c *conf) NewPageAccessToken(pem ...string) (string, error) {
 			PageAccessToken string `json:"pageAccessToken"`
 		} `json:"data,omitempty"`
 	}
-	if err := c.basicRequest(&result, "/AccessToken", permission{Data: pem}, "POST"); err != nil {
+	if err := c.basicRequest(&result, "/AccessToken", permission{Data: pem}, POST); err != nil {
 		return "", err
 	}
 	return result.Data[0].PageAccessToken, nil
@@ -55,7 +55,7 @@ func (c *conf) ValidateAccessToken(token string, uac ...int) (accessToken, error
 	var result struct {
 		Data []accessToken `json:"data"`
 	}
-	if err := c.bearerRequest(token, &result, path, nil, "GET"); err != nil {
+	if err := c.bearerRequest(token, &result, path, nil, GET); err != nil {
 		return accessToken{}, err
 	}
 	return result.Data[0], nil

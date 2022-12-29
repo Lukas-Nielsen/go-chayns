@@ -9,7 +9,7 @@ func (c *conf) Device(deviceId int) (device, error) {
 	var result struct {
 		Data []device `json:"data"`
 	}
-	if err := c.basicRequest(&result, "/Device/"+fmt.Sprint(deviceId), nil, "GET"); err != nil {
+	if err := c.basicRequest(&result, "/Device/"+fmt.Sprint(deviceId), nil, GET); err != nil {
 		return device{}, err
 	}
 	return result.Data[0], nil
