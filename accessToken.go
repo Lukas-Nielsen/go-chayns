@@ -10,7 +10,6 @@ type permission struct {
 	Data []string `json:"permissions"`
 }
 
-// struct for access token info
 type AccessToken struct {
 	LocationID     int       `json:"locationId"`
 	DeveloperID    int       `json:"developerId"`
@@ -28,8 +27,6 @@ type AccessToken struct {
 	} `json:"tokenType"`
 }
 
-// getting the page acces token based on the given permission
-//
 // https://github.com/TobitSoftware/chayns-backend/wiki/Authorization
 func (c *Conf) NewPageAccessToken(pem ...string) (string, error) {
 	var result struct {
@@ -43,8 +40,6 @@ func (c *Conf) NewPageAccessToken(pem ...string) (string, error) {
 	return result.Data[0].PageAccessToken, nil
 }
 
-// validate the given access token (user or page)
-//
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-AccessToken#read-accesstoken
 func (c *Conf) ValidateAccessToken(token string, uac ...int) (AccessToken, error) {
 	path := "/AccessToken"

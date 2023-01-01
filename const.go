@@ -1,6 +1,6 @@
 package chayns
 
 const (
-	baseUrl = "https://api.chayns.net/"
-	version = "v2.0"
+	BASE_URL = "https://api.chayns.net/"
+	VERSION  = "v2.0"
 )

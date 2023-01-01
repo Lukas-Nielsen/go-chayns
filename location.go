@@ -1,6 +1,5 @@
 package chayns
 
-// struct for location info
 type location struct {
 	AppName           string `json:"appName"`
 	Name              string `json:"name"`
@@ -11,8 +10,6 @@ type location struct {
 	IosAppVersion     int    `json:"iosAppVersion"`
 }
 
-// getting the location info
-//
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Location
 func (c *Conf) Location() (location, error) {
 	var result struct {

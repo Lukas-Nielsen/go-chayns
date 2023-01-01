@@ -14,6 +14,10 @@ const (
 	DELETE string = "DELETE"
 )
 
+func (c *Conf) getUrl(path string) string {
+	return BASE_URL + VERSION + "/" + fmt.Sprint(c.locationID) + path
+}
+
 func (c *Conf) basicRequest(result any, path string, data any, method string) error {
 	if c.locationID == 0 {
 		return fmt.Errorf("'locationID' must not be empty")
@@ -25,8 +29,6 @@ func (c *Conf) basicRequest(result any, path string, data any, method string) er
 		return fmt.Errorf("'secret' must not be empty")
 	}
 	var respError respError
-
-	url := baseUrl + version + "/" + fmt.Sprint(c.locationID) + path
 
 	client := resty.New()
 
@@ -44,7 +46,7 @@ func (c *Conf) basicRequest(result any, path string, data any, method string) er
 				SetBody(data)
 		}
 		_, err = req.
-			Post(url)
+			Post(c.getUrl(path))
 
 	case PATCH:
 		if data != nil {
@@ -52,15 +54,15 @@ func (c *Conf) basicRequest(result any, path string, data any, method string) er
 				SetBody(data)
 		}
 		_, err = req.
-			Patch(url)
+			Patch(c.getUrl(path))
 
 	case GET:
 		_, err = req.
-			Get(url)
+			Get(c.getUrl(path))
 
 	case DELETE:
 		_, err = req.
-			Delete(url)
+			Delete(c.getUrl(path))
 	}
 	if err != nil {
 		return err
@@ -78,8 +80,6 @@ func (c *Conf) bearerRequest(token string, result any, path string, data any, me
 	}
 	var respError respError
 
-	url := baseUrl + version + "/" + fmt.Sprint(c.locationID) + path
-
 	client := resty.New()
 
 	req := client.R().
@@ -96,11 +96,11 @@ func (c *Conf) bearerRequest(token string, result any, path string, data any, me
 				SetBody(data)
 		}
 		_, err = req.
-			Post(url)
+			Post(c.getUrl(path))
 
 	case GET:
 		_, err = req.
-			Get(url)
+			Get(c.getUrl(path))
 	}
 	if err != nil {
 		return err

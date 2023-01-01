@@ -2,7 +2,6 @@ package chayns
 
 import "fmt"
 
-// struct for intercom
 type intercom struct {
 	*Conf
 	Message             string  `json:"Message"`
@@ -19,8 +18,6 @@ type image struct {
 	URL string `json:"url"`
 }
 
-// create new intercom message
-//
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Intercom
 func (c *Conf) NewIntercom(msg string) *intercom {
 	return &intercom{
@@ -29,32 +26,24 @@ func (c *Conf) NewIntercom(msg string) *intercom {
 	}
 }
 
-// add group(s) to intercom message
-//
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Intercom
 func (i *intercom) AddGroup(groupId ...int) *intercom {
 	i.UacIds = append(i.UacIds, groupId...)
 	return i
 }
 
-// add user(s) to intercom message
-//
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Intercom
 func (i *intercom) AddUser(userId ...int) *intercom {
 	i.UserIds = append(i.UserIds, userId...)
 	return i
 }
 
-// add location(s) to intercom message
-//
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Intercom
 func (i *intercom) AddLocation(locationId ...int) *intercom {
 	i.ReceiverLocationIds = append(i.ReceiverLocationIds, locationId...)
 	return i
 }
 
-// add image(s) to intercom message
-//
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Intercom
 func (i *intercom) AddImage(url ...string) *intercom {
 	var images []image
@@ -67,32 +56,24 @@ func (i *intercom) AddImage(url ...string) *intercom {
 	return i
 }
 
-// set thread name of intercom message
-//
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Intercom
 func (i *intercom) SetThreadName(name string) *intercom {
 	i.ThreadName = name
 	return i
 }
 
-// set group chat or not of intercom message
-//
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Intercom
 func (i *intercom) SetGroupChat(group bool) *intercom {
 	i.UseGroupChat = group
 	return i
 }
 
-// set user access token of intercom message
-//
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Intercom
 func (i *intercom) SetAccessToken(token string) *intercom {
 	i.UserAccessToken = token
 	return i
 }
 
-// send intercom message
-//
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Intercom
 func (i *intercom) Send() (bool, error) {
 	if len(i.Message) == 0 {

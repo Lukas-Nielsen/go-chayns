@@ -5,8 +5,6 @@ import (
 	"net/url"
 )
 
-// get all members of a group
-//
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Group-Member#get-all-uac-members
 func (c *Conf) Members(groupId int, filter ...map[string]string) ([]user, error) {
 	filterString := ""
@@ -27,8 +25,6 @@ func (c *Conf) Members(groupId int, filter ...map[string]string) ([]user, error)
 	return result.Data, nil
 }
 
-// get data of given user in given group
-//
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Group-Member#get-uac-member
 func (c *Conf) Member(groupId int, userId int) (user, error) {
 	var result struct {
@@ -40,8 +36,6 @@ func (c *Conf) Member(groupId int, userId int) (user, error) {
 	return result.Data[0], nil
 }
 
-// add user to group
-//
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Group-Member#add-user-to-uac-group
 func (c *Conf) AddUserUac(groupId int, userId int) (user, error) {
 	var result struct {
@@ -53,8 +47,6 @@ func (c *Conf) AddUserUac(groupId int, userId int) (user, error) {
 	return result.Data[0], nil
 }
 
-// remove user from group
-//
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Group-Member#delete-user-from-uac-group
 func (c *Conf) RemoveUserUac(groupId int, userId int) (bool, error) {
 	var result struct {

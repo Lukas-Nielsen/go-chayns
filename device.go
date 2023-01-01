@@ -2,8 +2,6 @@ package chayns
 
 import "fmt"
 
-// get data of device
-//
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Device
 func (c *Conf) Device(deviceId int) (device, error) {
 	var result struct {

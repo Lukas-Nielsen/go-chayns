@@ -6,8 +6,6 @@ type alert struct {
 	Alert string `json:"alert"`
 }
 
-// push message to group
-//
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Push#push-to-uac-group
 func (c *Conf) PushGroup(groupId int, msg string) (bool, error) {
 	var result struct {
@@ -21,8 +19,6 @@ func (c *Conf) PushGroup(groupId int, msg string) (bool, error) {
 	return result.Data[0].Success, nil
 }
 
-// push message to user
-//
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Push#push-to-user
 func (c *Conf) PushUser(userId int, msg string) (bool, error) {
 	var result struct {
