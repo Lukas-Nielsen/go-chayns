@@ -19,7 +19,7 @@ type user struct {
 // get data of all users
 //
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-User#get-all-users
-func (c *conf) Users(filter ...map[string]string) ([]user, error) {
+func (c *Conf) Users(filter ...map[string]string) ([]user, error) {
 	filterString := ""
 	if len(filter) == 1 && len(filter[0]) > 0 {
 		params := url.Values{}
@@ -41,7 +41,7 @@ func (c *conf) Users(filter ...map[string]string) ([]user, error) {
 // get data of given user
 //
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-User#get-user
-func (c *conf) User(userId int) (user, error) {
+func (c *Conf) User(userId int) (user, error) {
 	var result struct {
 		Data []user `json:"data"`
 	}
@@ -54,7 +54,7 @@ func (c *conf) User(userId int) (user, error) {
 // get uac groups of given user
 //
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-User#get-uac-groups
-func (c *conf) UserUAC(userId int, filter ...map[string]string) ([]uac, error) {
+func (c *Conf) UserUAC(userId int, filter ...map[string]string) ([]uac, error) {
 	filterString := ""
 	if len(filter) == 1 && len(filter[0]) > 0 {
 		params := url.Values{}
@@ -76,7 +76,7 @@ func (c *conf) UserUAC(userId int, filter ...map[string]string) ([]uac, error) {
 // get devices of given user
 //
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-User#get-all-devices-from-user
-func (c *conf) UserDevices(userId int, filter ...map[string]string) ([]device, error) {
+func (c *Conf) UserDevices(userId int, filter ...map[string]string) ([]device, error) {
 	filterString := ""
 	if len(filter) == 1 && len(filter[0]) > 0 {
 		params := url.Values{}
@@ -98,7 +98,7 @@ func (c *conf) UserDevices(userId int, filter ...map[string]string) ([]device, e
 // get given device of given user
 //
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-User#get-device-from-user
-func (c *conf) UserDevice(userId int, deviceId int) (device, error) {
+func (c *Conf) UserDevice(userId int, deviceId int) (device, error) {
 	var result struct {
 		Data []device `json:"data"`
 	}

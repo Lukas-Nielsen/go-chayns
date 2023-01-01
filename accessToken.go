@@ -11,7 +11,7 @@ type permission struct {
 }
 
 // struct for access token info
-type accessToken struct {
+type AccessToken struct {
 	LocationID     int       `json:"locationId"`
 	DeveloperID    int       `json:"developerId"`
 	TappID         int       `json:"tappId"`
@@ -31,7 +31,7 @@ type accessToken struct {
 // getting the page acces token based on the given permission
 //
 // https://github.com/TobitSoftware/chayns-backend/wiki/Authorization
-func (c *conf) NewPageAccessToken(pem ...string) (string, error) {
+func (c *Conf) NewPageAccessToken(pem ...string) (string, error) {
 	var result struct {
 		Data []struct {
 			PageAccessToken string `json:"pageAccessToken"`
@@ -46,17 +46,17 @@ func (c *conf) NewPageAccessToken(pem ...string) (string, error) {
 // validate the given access token (user or page)
 //
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-AccessToken#read-accesstoken
-func (c *conf) ValidateAccessToken(token string, uac ...int) (accessToken, error) {
+func (c *Conf) ValidateAccessToken(token string, uac ...int) (AccessToken, error) {
 	path := "/AccessToken"
 	if len(uac) > 0 {
 		path = "?RequiredUacGroups=" + strings.Join(strings.Split(fmt.Sprint(uac), " "), ",")
 	}
 
 	var result struct {
-		Data []accessToken `json:"data"`
+		Data []AccessToken `json:"data"`
 	}
 	if err := c.bearerRequest(token, &result, path, nil, GET); err != nil {
-		return accessToken{}, err
+		return AccessToken{}, err
 	}
 	return result.Data[0], nil
 }

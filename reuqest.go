@@ -14,7 +14,7 @@ const (
 	DELETE string = "DELETE"
 )
 
-func (c *conf) basicRequest(result any, path string, data any, method string) error {
+func (c *Conf) basicRequest(result any, path string, data any, method string) error {
 	if c.locationID == 0 {
 		return fmt.Errorf("'locationID' must not be empty")
 	}
@@ -72,7 +72,7 @@ func (c *conf) basicRequest(result any, path string, data any, method string) er
 	return err
 }
 
-func (c *conf) bearerRequest(token string, result any, path string, data any, method string) error {
+func (c *Conf) bearerRequest(token string, result any, path string, data any, method string) error {
 	if c.locationID == 0 {
 		return fmt.Errorf("'locationID' must not be empty")
 	}

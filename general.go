@@ -1,32 +1,32 @@
 package chayns
 
-type conf struct {
+type Conf struct {
 	locationID int
 	tappID     int
 	secret     string
 }
 
 // create new conf
-func NewConf(location int) *conf {
-	return &conf{
+func NewConf(location int) *Conf {
+	return &Conf{
 		locationID: location,
 	}
 }
 
 // set locationId of conf
-func (c *conf) SetLocation(location int) *conf {
+func (c *Conf) SetLocation(location int) *Conf {
 	c.locationID = location
 	return c
 }
 
 // set tappId of conf
-func (c *conf) SetTapp(tapp int) *conf {
+func (c *Conf) SetTapp(tapp int) *Conf {
 	c.tappID = tapp
 	return c
 }
 
 // set secret of conf
-func (c *conf) SetSecret(secret string) *conf {
+func (c *Conf) SetSecret(secret string) *Conf {
 	c.secret = secret
 	return c
 }

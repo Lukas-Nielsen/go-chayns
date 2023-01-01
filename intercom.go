@@ -4,7 +4,7 @@ import "fmt"
 
 // struct for intercom
 type intercom struct {
-	*conf
+	*Conf
 	Message             string  `json:"Message"`
 	UacIds              []int   `json:"UacIds,omitempty"`
 	UserIds             []int   `json:"UserIds,omitempty"`
@@ -22,7 +22,7 @@ type image struct {
 // create new intercom message
 //
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Intercom
-func (c *conf) NewIntercom(msg string) *intercom {
+func (c *Conf) NewIntercom(msg string) *intercom {
 	return &intercom{
 		Message:      msg,
 		UseGroupChat: false,

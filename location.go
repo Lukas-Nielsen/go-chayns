@@ -14,7 +14,7 @@ type location struct {
 // getting the location info
 //
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Location
-func (c *conf) Location() (location, error) {
+func (c *Conf) Location() (location, error) {
 	var result struct {
 		Data []location `json:"data"`
 	}

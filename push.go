@@ -9,7 +9,7 @@ type alert struct {
 // push message to group
 //
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Push#push-to-uac-group
-func (c *conf) PushGroup(groupId int, msg string) (bool, error) {
+func (c *Conf) PushGroup(groupId int, msg string) (bool, error) {
 	var result struct {
 		Data []struct {
 			Success bool `json:"success"`
@@ -24,7 +24,7 @@ func (c *conf) PushGroup(groupId int, msg string) (bool, error) {
 // push message to user
 //
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Push#push-to-user
-func (c *conf) PushUser(userId int, msg string) (bool, error) {
+func (c *Conf) PushUser(userId int, msg string) (bool, error) {
 	var result struct {
 		Data []struct {
 			Success bool `json:"success"`
