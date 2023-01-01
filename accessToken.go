@@ -49,7 +49,7 @@ func (c *Conf) NewPageAccessToken(pem ...string) (string, error) {
 func (c *Conf) ValidateAccessToken(token string, uac ...int) (AccessToken, error) {
 	path := "/AccessToken"
 	if len(uac) > 0 {
-		path = "?RequiredUacGroups=" + strings.Join(strings.Split(fmt.Sprint(uac), " "), ",")
+		path += "?RequiredUacGroups=" + strings.Join(strings.Split(fmt.Sprint(uac), " "), ",")
 	}
 
 	var result struct {
