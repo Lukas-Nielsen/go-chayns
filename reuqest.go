@@ -15,7 +15,7 @@ const (
 )
 
 func (c *Conf) getUrl(path string) string {
-	return BASE_URL + VERSION + "/" + fmt.Sprint(c.locationID) + path
+	return fmt.Sprint(c.locationID) + path
 }
 
 func (c *Conf) basicRequest(result any, path string, data any, method string) error {
@@ -30,7 +30,8 @@ func (c *Conf) basicRequest(result any, path string, data any, method string) er
 	}
 	var respError respError
 
-	client := resty.New()
+	client := resty.New().
+		SetBaseURL(BASE_URL + VERSION + "/")
 
 	req := client.R().
 		SetHeader("Authorization", "Basic "+b64.StdEncoding.EncodeToString([]byte(fmt.Sprint(c.tappID)+":"+c.secret))).
@@ -80,7 +81,8 @@ func (c *Conf) bearerRequest(token string, result any, path string, data any, me
 	}
 	var respError respError
 
-	client := resty.New()
+	client := resty.New().
+		SetBaseURL(BASE_URL + VERSION + "/")
 
 	req := client.R().
 		SetHeader("Authorization", "Bearer "+token).
