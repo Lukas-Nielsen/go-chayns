@@ -41,7 +41,7 @@ func (c *Conf) AddUserUac(groupId int, userId int) (User, error) {
 	var result struct {
 		Data []User `json:"data"`
 	}
-	if err := c.basicRequest(&result, "/UAC", nil, POST); err != nil {
+	if err := c.basicRequest(&result, "/UAC/"+fmt.Sprint(groupId)+"/User/"+fmt.Sprint(userId), nil, POST); err != nil {
 		return User{}, err
 	}
 	return result.Data[0], nil
