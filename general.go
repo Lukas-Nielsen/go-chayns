@@ -32,7 +32,7 @@ type respError struct {
 	Error   string `json:"errorGuid,omitempty"`
 }
 
-type uac struct {
+type UAC struct {
 	Name        string `json:"name"`
 	ShowName    string `json:"showName"`
 	UserGroupID int    `json:"userGroupId"`
@@ -40,7 +40,7 @@ type uac struct {
 	TappID      int    `json:"tappId"`
 }
 
-type device struct {
+type Device struct {
 	SysName     string `json:"sysName"`
 	SysVersion  string `json:"sysVersion"`
 	LastRequest string `json:"lastRequest"`

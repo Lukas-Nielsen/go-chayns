@@ -11,7 +11,7 @@ type groupData struct {
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Group#get-all-uac-groups
-func (c *Conf) Groups(filter ...map[string]string) ([]uac, error) {
+func (c *Conf) Groups(filter ...map[string]string) ([]UAC, error) {
 	filterString := ""
 	if len(filter) == 1 && len(filter[0]) > 0 {
 		params := url.Values{}
@@ -22,50 +22,50 @@ func (c *Conf) Groups(filter ...map[string]string) ([]uac, error) {
 	}
 
 	var result struct {
-		Data []uac `json:"data"`
+		Data []UAC `json:"data"`
 	}
 	if err := c.basicRequest(&result, "/UAC"+filterString, nil, GET); err != nil {
-		return []uac{}, err
+		return []UAC{}, err
 	}
 	return result.Data, nil
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Group#get-uac-group
-func (c *Conf) Group(groupId int) (uac, error) {
+func (c *Conf) Group(groupId int) (UAC, error) {
 	var result struct {
-		Data []uac `json:"data"`
+		Data []UAC `json:"data"`
 	}
 	if err := c.basicRequest(&result, "/UAC/"+fmt.Sprint(groupId), nil, GET); err != nil {
-		return uac{}, err
+		return UAC{}, err
 	}
 	return result.Data[0], nil
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Group#create-uac-group
-func (c *Conf) NewGroup(name string, showName string) (uac, error) {
+func (c *Conf) NewGroup(name string, showName string) (UAC, error) {
 	if len(name) == 0 {
-		return uac{}, fmt.Errorf("'name' must not be empty")
+		return UAC{}, fmt.Errorf("'name' must not be empty")
 	}
 	if len(showName) == 0 {
-		return uac{}, fmt.Errorf("'showName' must not be empty")
+		return UAC{}, fmt.Errorf("'showName' must not be empty")
 	}
 
 	var result struct {
-		Data []uac `json:"data"`
+		Data []UAC `json:"data"`
 	}
 	if err := c.basicRequest(&result, "/UAC", groupData{ShowName: showName, Name: name}, POST); err != nil {
-		return uac{}, err
+		return UAC{}, err
 	}
 	return result.Data[0], nil
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Group#modify-uac-group
-func (c *Conf) ModifyGroup(groupId int, name string, showName string) (uac, error) {
+func (c *Conf) ModifyGroup(groupId int, name string, showName string) (UAC, error) {
 	var result struct {
-		Data []uac `json:"data"`
+		Data []UAC `json:"data"`
 	}
 	if err := c.basicRequest(&result, "/UAC/"+fmt.Sprint(groupId), groupData{ShowName: showName, Name: name}, PATCH); err != nil {
-		return uac{}, err
+		return UAC{}, err
 	}
 	return result.Data[0], nil
 }

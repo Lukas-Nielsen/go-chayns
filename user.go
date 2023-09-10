@@ -5,7 +5,7 @@ import (
 	"net/url"
 )
 
-type user struct {
+type User struct {
 	FirstName   string `json:"firstName"`
 	LastName    string `json:"lastName"`
 	Name        string `json:"name"`
@@ -17,7 +17,7 @@ type user struct {
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-User#get-all-users
-func (c *Conf) Users(filter ...map[string]string) ([]user, error) {
+func (c *Conf) Users(filter ...map[string]string) ([]User, error) {
 	filterString := ""
 	if len(filter) == 1 && len(filter[0]) > 0 {
 		params := url.Values{}
@@ -28,27 +28,27 @@ func (c *Conf) Users(filter ...map[string]string) ([]user, error) {
 	}
 
 	var result struct {
-		Data []user `json:"data"`
+		Data []User `json:"data"`
 	}
 	if err := c.basicRequest(&result, "/User"+filterString, nil, GET); err != nil {
-		return []user{}, err
+		return []User{}, err
 	}
 	return result.Data, nil
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-User#get-user
-func (c *Conf) User(userId int) (user, error) {
+func (c *Conf) User(userId int) (User, error) {
 	var result struct {
-		Data []user `json:"data"`
+		Data []User `json:"data"`
 	}
 	if err := c.basicRequest(&result, "/User/"+fmt.Sprint(userId), nil, GET); err != nil {
-		return user{}, err
+		return User{}, err
 	}
 	return result.Data[0], nil
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-User#get-uac-groups
-func (c *Conf) UserUAC(userId int, filter ...map[string]string) ([]uac, error) {
+func (c *Conf) UserUAC(userId int, filter ...map[string]string) ([]UAC, error) {
 	filterString := ""
 	if len(filter) == 1 && len(filter[0]) > 0 {
 		params := url.Values{}
@@ -59,16 +59,16 @@ func (c *Conf) UserUAC(userId int, filter ...map[string]string) ([]uac, error) {
 	}
 
 	var result struct {
-		Data []uac `json:"data"`
+		Data []UAC `json:"data"`
 	}
 	if err := c.basicRequest(&result, "/User/"+fmt.Sprint(userId)+"/UAC"+filterString, nil, GET); err != nil {
-		return []uac{}, err
+		return []UAC{}, err
 	}
 	return result.Data, nil
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-User#get-all-devices-from-user
-func (c *Conf) UserDevices(userId int, filter ...map[string]string) ([]device, error) {
+func (c *Conf) UserDevices(userId int, filter ...map[string]string) ([]Device, error) {
 	filterString := ""
 	if len(filter) == 1 && len(filter[0]) > 0 {
 		params := url.Values{}
@@ -79,21 +79,21 @@ func (c *Conf) UserDevices(userId int, filter ...map[string]string) ([]device, e
 	}
 
 	var result struct {
-		Data []device `json:"data"`
+		Data []Device `json:"data"`
 	}
 	if err := c.basicRequest(&result, "/User/"+fmt.Sprint(userId)+"/Device"+filterString, nil, GET); err != nil {
-		return []device{}, err
+		return []Device{}, err
 	}
 	return result.Data, nil
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-User#get-device-from-user
-func (c *Conf) UserDevice(userId int, deviceId int) (device, error) {
+func (c *Conf) UserDevice(userId int, deviceId int) (Device, error) {
 	var result struct {
-		Data []device `json:"data"`
+		Data []Device `json:"data"`
 	}
 	if err := c.basicRequest(&result, "/User/"+fmt.Sprint(userId)+"/Device/"+fmt.Sprint(deviceId), nil, GET); err != nil {
-		return device{}, err
+		return Device{}, err
 	}
 	return result.Data[0], nil
 }
