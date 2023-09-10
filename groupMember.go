@@ -51,11 +51,10 @@ func (c *Conf) AddUserUac(groupId int, userId int) (User, error) {
 func (c *Conf) RemoveUserUac(groupId int, userId int) (bool, error) {
 	var result struct {
 		Data []struct {
-			Success bool `json:"success"`
 		} `json:"data"`
 	}
 	if err := c.basicRequest(&result, "/UAC/"+fmt.Sprint(groupId)+"/User/"+fmt.Sprint(userId), nil, DELETE); err != nil {
 		return false, err
 	}
-	return result.Data[0].Success, nil
+	return len(result.Data) == 0, nil
 }
