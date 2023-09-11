@@ -21,6 +21,7 @@ type image struct {
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Intercom
 func (c *Conf) NewIntercom(msg string) *intercom {
 	return &intercom{
+		Conf:         c,
 		Message:      msg,
 		UseGroupChat: false,
 	}
