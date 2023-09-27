@@ -30,7 +30,7 @@ func (c *Conf) Users(filter ...map[string]string) ([]User, error) {
 	var result struct {
 		Data []User `json:"data"`
 	}
-	if err := c.basicRequest(&result, "/User"+filterString, nil, GET); err != nil {
+	if err := c.basicRequest(&result, "/User"+filterString, nil, get); err != nil {
 		return []User{}, err
 	}
 	return result.Data, nil
@@ -41,7 +41,7 @@ func (c *Conf) User(userId int) (User, error) {
 	var result struct {
 		Data []User `json:"data"`
 	}
-	if err := c.basicRequest(&result, "/User/"+fmt.Sprint(userId), nil, GET); err != nil {
+	if err := c.basicRequest(&result, "/User/"+fmt.Sprint(userId), nil, get); err != nil {
 		return User{}, err
 	}
 	return result.Data[0], nil
@@ -61,7 +61,7 @@ func (c *Conf) UserUAC(userId int, filter ...map[string]string) ([]UAC, error) {
 	var result struct {
 		Data []UAC `json:"data"`
 	}
-	if err := c.basicRequest(&result, "/User/"+fmt.Sprint(userId)+"/UAC"+filterString, nil, GET); err != nil {
+	if err := c.basicRequest(&result, "/User/"+fmt.Sprint(userId)+"/UAC"+filterString, nil, get); err != nil {
 		return []UAC{}, err
 	}
 	return result.Data, nil
@@ -81,7 +81,7 @@ func (c *Conf) UserDevices(userId int, filter ...map[string]string) ([]Device, e
 	var result struct {
 		Data []Device `json:"data"`
 	}
-	if err := c.basicRequest(&result, "/User/"+fmt.Sprint(userId)+"/Device"+filterString, nil, GET); err != nil {
+	if err := c.basicRequest(&result, "/User/"+fmt.Sprint(userId)+"/Device"+filterString, nil, get); err != nil {
 		return []Device{}, err
 	}
 	return result.Data, nil
@@ -92,7 +92,7 @@ func (c *Conf) UserDevice(userId int, deviceId int) (Device, error) {
 	var result struct {
 		Data []Device `json:"data"`
 	}
-	if err := c.basicRequest(&result, "/User/"+fmt.Sprint(userId)+"/Device/"+fmt.Sprint(deviceId), nil, GET); err != nil {
+	if err := c.basicRequest(&result, "/User/"+fmt.Sprint(userId)+"/Device/"+fmt.Sprint(deviceId), nil, get); err != nil {
 		return Device{}, err
 	}
 	return result.Data[0], nil

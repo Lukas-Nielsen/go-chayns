@@ -15,7 +15,7 @@ func (c *Conf) Location() (location, error) {
 	var result struct {
 		Data []location `json:"data"`
 	}
-	if err := c.basicRequest(&result, "", nil, GET); err != nil {
+	if err := c.basicRequest(&result, "", nil, get); err != nil {
 		return location{}, err
 	}
 	return result.Data[0], nil

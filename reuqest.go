@@ -8,10 +8,11 @@ import (
 )
 
 const (
-	POST   string = "POST"
-	GET    string = "GET"
-	PATCH  string = "PATCH"
-	DELETE string = "DELETE"
+	post      string = "POST"
+	get       string = "GET"
+	patch     string = "PATCH"
+	delete    string = "DELETE"
+	useragent string = "github.com/Lukas-Nielsen/go-chayns"
 )
 
 func (c *Conf) getUrl(path string) string {
@@ -35,13 +36,14 @@ func (c *Conf) basicRequest(result any, path string, data any, method string) er
 
 	req := client.R().
 		SetHeader("Authorization", "Basic "+b64.StdEncoding.EncodeToString([]byte(fmt.Sprint(c.tappID)+":"+c.secret))).
+		SetHeader("User-Agent", useragent).
 		SetResult(&result).
 		SetError(&respError)
 
 	var err error
 	err = nil
 	switch method {
-	case POST:
+	case post:
 		if data != nil {
 			req = req.
 				SetBody(data)
@@ -49,7 +51,7 @@ func (c *Conf) basicRequest(result any, path string, data any, method string) er
 		_, err = req.
 			Post(c.getUrl(path))
 
-	case PATCH:
+	case patch:
 		if data != nil {
 			req = req.
 				SetBody(data)
@@ -57,11 +59,11 @@ func (c *Conf) basicRequest(result any, path string, data any, method string) er
 		_, err = req.
 			Patch(c.getUrl(path))
 
-	case GET:
+	case get:
 		_, err = req.
 			Get(c.getUrl(path))
 
-	case DELETE:
+	case delete:
 		_, err = req.
 			Delete(c.getUrl(path))
 	}
@@ -85,14 +87,15 @@ func (c *Conf) bearerRequest(token string, result any, path string, data any, me
 		SetBaseURL(BASE_URL + VERSION + "/")
 
 	req := client.R().
-		SetHeader("Authorization", "Bearer "+token).
+		SetAuthToken(token).
+		SetHeader("User-Agent", useragent).
 		SetResult(&result).
 		SetError(&respError)
 
 	var err error
 	err = nil
 	switch method {
-	case POST:
+	case post:
 		if data != nil {
 			req = req.
 				SetBody(data)
@@ -100,7 +103,7 @@ func (c *Conf) bearerRequest(token string, result any, path string, data any, me
 		_, err = req.
 			Post(c.getUrl(path))
 
-	case GET:
+	case get:
 		_, err = req.
 			Get(c.getUrl(path))
 	}

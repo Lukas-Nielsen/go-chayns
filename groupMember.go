@@ -19,7 +19,7 @@ func (c *Conf) Members(groupId int, filter ...map[string]string) ([]User, error)
 	var result struct {
 		Data []User `json:"data"`
 	}
-	if err := c.basicRequest(&result, "/UAC/"+fmt.Sprint(groupId)+"/User"+filterString, nil, GET); err != nil {
+	if err := c.basicRequest(&result, "/UAC/"+fmt.Sprint(groupId)+"/User"+filterString, nil, get); err != nil {
 		return []User{}, err
 	}
 	return result.Data, nil
@@ -30,7 +30,7 @@ func (c *Conf) Member(groupId int, userId int) (User, error) {
 	var result struct {
 		Data []User `json:"data"`
 	}
-	if err := c.basicRequest(&result, "/UAC/"+fmt.Sprint(groupId)+"/User/"+fmt.Sprint(userId), nil, GET); err != nil {
+	if err := c.basicRequest(&result, "/UAC/"+fmt.Sprint(groupId)+"/User/"+fmt.Sprint(userId), nil, get); err != nil {
 		return User{}, err
 	}
 	return result.Data[0], nil
@@ -41,7 +41,7 @@ func (c *Conf) AddUserUac(groupId int, userId int) (User, error) {
 	var result struct {
 		Data []User `json:"data"`
 	}
-	if err := c.basicRequest(&result, "/UAC/"+fmt.Sprint(groupId)+"/User/"+fmt.Sprint(userId), nil, POST); err != nil {
+	if err := c.basicRequest(&result, "/UAC/"+fmt.Sprint(groupId)+"/User/"+fmt.Sprint(userId), nil, post); err != nil {
 		return User{}, err
 	}
 	return result.Data[0], nil
@@ -53,7 +53,7 @@ func (c *Conf) RemoveUserUac(groupId int, userId int) (bool, error) {
 		Data []struct {
 		} `json:"data"`
 	}
-	if err := c.basicRequest(&result, "/UAC/"+fmt.Sprint(groupId)+"/User/"+fmt.Sprint(userId), nil, DELETE); err != nil {
+	if err := c.basicRequest(&result, "/UAC/"+fmt.Sprint(groupId)+"/User/"+fmt.Sprint(userId), nil, delete); err != nil {
 		return false, err
 	}
 	return len(result.Data) == 0, nil

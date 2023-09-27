@@ -7,7 +7,7 @@ func (c *Conf) Device(deviceId int) (Device, error) {
 	var result struct {
 		Data []Device `json:"data"`
 	}
-	if err := c.basicRequest(&result, "/Device/"+fmt.Sprint(deviceId), nil, GET); err != nil {
+	if err := c.basicRequest(&result, "/Device/"+fmt.Sprint(deviceId), nil, get); err != nil {
 		return Device{}, err
 	}
 	return result.Data[0], nil

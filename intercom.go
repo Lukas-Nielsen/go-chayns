@@ -3,7 +3,7 @@ package chayns
 import "fmt"
 
 type intercom struct {
-	*Conf
+	conf                *Conf
 	Message             string  `json:"Message"`
 	UacIds              []int   `json:"UacIds,omitempty"`
 	UserIds             []int   `json:"UserIds,omitempty"`
@@ -21,7 +21,7 @@ type image struct {
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Intercom
 func (c *Conf) NewIntercom(msg string) *intercom {
 	return &intercom{
-		Conf:         c,
+		conf:         c,
 		Message:      msg,
 		UseGroupChat: false,
 	}
@@ -90,7 +90,7 @@ func (i *intercom) Send() (bool, error) {
 			Success bool `json:"success"`
 		} `json:"data"`
 	}
-	if err := i.basicRequest(&result, "/Intercom", i, POST); err != nil {
+	if err := i.conf.basicRequest(&result, "/Intercom", i, post); err != nil {
 		return false, err
 	}
 	return result.Data[0].Success, nil
