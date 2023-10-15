@@ -2,8 +2,8 @@ package chayns
 
 import "fmt"
 
-type intercom struct {
-	conf                *Conf
+type Intercom struct {
+	client              *Client
 	Message             string  `json:"Message"`
 	UacIds              []int   `json:"UacIds,omitempty"`
 	UserIds             []int   `json:"UserIds,omitempty"`
@@ -19,34 +19,34 @@ type image struct {
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Intercom
-func (c *Conf) NewIntercom(msg string) *intercom {
-	return &intercom{
-		conf:         c,
+func (c *Client) NewIntercom(msg string) *Intercom {
+	return &Intercom{
+		client:         c,
 		Message:      msg,
 		UseGroupChat: false,
 	}
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Intercom
-func (i *intercom) AddGroup(groupId ...int) *intercom {
+func (i *Intercom) AddGroup(groupId ...int) *Intercom {
 	i.UacIds = append(i.UacIds, groupId...)
 	return i
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Intercom
-func (i *intercom) AddUser(userId ...int) *intercom {
+func (i *Intercom) AddUser(userId ...int) *Intercom {
 	i.UserIds = append(i.UserIds, userId...)
 	return i
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Intercom
-func (i *intercom) AddLocation(locationId ...int) *intercom {
+func (i *Intercom) AddLocation(locationId ...int) *Intercom {
 	i.ReceiverLocationIds = append(i.ReceiverLocationIds, locationId...)
 	return i
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Intercom
-func (i *intercom) AddImage(url ...string) *intercom {
+func (i *Intercom) AddImage(url ...string) *Intercom {
 	var images []image
 	if len(url) > 0 {
 		for _, entry := range url {
@@ -58,25 +58,25 @@ func (i *intercom) AddImage(url ...string) *intercom {
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Intercom
-func (i *intercom) SetThreadName(name string) *intercom {
+func (i *Intercom) SetThreadName(name string) *Intercom {
 	i.ThreadName = name
 	return i
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Intercom
-func (i *intercom) SetGroupChat(group bool) *intercom {
+func (i *Intercom) SetGroupChat(group bool) *Intercom {
 	i.UseGroupChat = group
 	return i
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Intercom
-func (i *intercom) SetAccessToken(token string) *intercom {
+func (i *Intercom) SetAccessToken(token string) *Intercom {
 	i.UserAccessToken = token
 	return i
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Intercom
-func (i *intercom) Send() (bool, error) {
+func (i *Intercom) Send() (bool, error) {
 	if len(i.Message) == 0 {
 		return false, fmt.Errorf("'Message' must not be empty")
 	}
@@ -90,7 +90,7 @@ func (i *intercom) Send() (bool, error) {
 			Success bool `json:"success"`
 		} `json:"data"`
 	}
-	if err := i.conf.basicRequest(&result, "/Intercom", i, post); err != nil {
+	if err := i.client.basicRequest(&result, "/Intercom", i, post); err != nil {
 		return false, err
 	}
 	return result.Data[0].Success, nil

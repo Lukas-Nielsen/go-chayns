@@ -30,7 +30,7 @@ type AccessToken struct {
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Authorization
-func (c *Conf) NewPageAccessToken(pem ...string) (string, error) {
+func (c *Client) NewPageAccessToken(pem ...string) (string, error) {
 	var result struct {
 		Data []struct {
 			PageAccessToken string `json:"pageAccessToken"`
@@ -43,7 +43,7 @@ func (c *Conf) NewPageAccessToken(pem ...string) (string, error) {
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-AccessToken#read-accesstoken
-func (c *Conf) ValidateAccessToken(token string, uac ...int) (AccessToken, error) {
+func (c *Client) ValidateAccessToken(token string, uac ...int) (AccessToken, error) {
 	path := "/AccessToken"
 	if len(uac) > 0 {
 		path += "?RequiredUacGroups=" + strings.Join(strings.Split(fmt.Sprint(uac), " "), ",")
@@ -58,7 +58,7 @@ func (c *Conf) ValidateAccessToken(token string, uac ...int) (AccessToken, error
 	return result.Data[0], nil
 }
 
-func (c *Conf) ValidateAccessTokenAlt(token string) (bool, error) {
+func ValidateAccessTokenAlt(token string) (bool, error) {
 	client := resty.New()
 
 	resp, err := client.R().

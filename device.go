@@ -3,7 +3,7 @@ package chayns
 import "fmt"
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Device
-func (c *Conf) Device(deviceId int) (Device, error) {
+func (c *Client) Device(deviceId int) (Device, error) {
 	var result struct {
 		Data []Device `json:"data"`
 	}

@@ -17,7 +17,7 @@ type User struct {
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-User#get-all-users
-func (c *Conf) Users(filter ...map[string]string) ([]User, error) {
+func (c *Client) Users(filter ...map[string]string) ([]User, error) {
 	filterString := ""
 	if len(filter) == 1 && len(filter[0]) > 0 {
 		params := url.Values{}
@@ -37,7 +37,7 @@ func (c *Conf) Users(filter ...map[string]string) ([]User, error) {
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-User#get-user
-func (c *Conf) User(userId int) (User, error) {
+func (c *Client) User(userId int) (User, error) {
 	var result struct {
 		Data []User `json:"data"`
 	}
@@ -48,7 +48,7 @@ func (c *Conf) User(userId int) (User, error) {
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-User#get-uac-groups
-func (c *Conf) UserUAC(userId int, filter ...map[string]string) ([]UAC, error) {
+func (c *Client) UserUAC(userId int, filter ...map[string]string) ([]UAC, error) {
 	filterString := ""
 	if len(filter) == 1 && len(filter[0]) > 0 {
 		params := url.Values{}
@@ -68,7 +68,7 @@ func (c *Conf) UserUAC(userId int, filter ...map[string]string) ([]UAC, error) {
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-User#get-all-devices-from-user
-func (c *Conf) UserDevices(userId int, filter ...map[string]string) ([]Device, error) {
+func (c *Client) UserDevices(userId int, filter ...map[string]string) ([]Device, error) {
 	filterString := ""
 	if len(filter) == 1 && len(filter[0]) > 0 {
 		params := url.Values{}
@@ -88,7 +88,7 @@ func (c *Conf) UserDevices(userId int, filter ...map[string]string) ([]Device, e
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-User#get-device-from-user
-func (c *Conf) UserDevice(userId int, deviceId int) (Device, error) {
+func (c *Client) UserDevice(userId int, deviceId int) (Device, error) {
 	var result struct {
 		Data []Device `json:"data"`
 	}

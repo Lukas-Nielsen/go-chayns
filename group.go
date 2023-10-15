@@ -11,7 +11,7 @@ type groupData struct {
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Group#get-all-uac-groups
-func (c *Conf) Groups(filter ...map[string]string) ([]UAC, error) {
+func (c *Client) Groups(filter ...map[string]string) ([]UAC, error) {
 	filterString := ""
 	if len(filter) == 1 && len(filter[0]) > 0 {
 		params := url.Values{}
@@ -31,7 +31,7 @@ func (c *Conf) Groups(filter ...map[string]string) ([]UAC, error) {
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Group#get-uac-group
-func (c *Conf) Group(groupId int) (UAC, error) {
+func (c *Client) Group(groupId int) (UAC, error) {
 	var result struct {
 		Data []UAC `json:"data"`
 	}
@@ -42,7 +42,7 @@ func (c *Conf) Group(groupId int) (UAC, error) {
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Group#create-uac-group
-func (c *Conf) NewGroup(name string, showName string) (UAC, error) {
+func (c *Client) NewGroup(name string, showName string) (UAC, error) {
 	if len(name) == 0 {
 		return UAC{}, fmt.Errorf("'name' must not be empty")
 	}
@@ -60,7 +60,7 @@ func (c *Conf) NewGroup(name string, showName string) (UAC, error) {
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Group#modify-uac-group
-func (c *Conf) ModifyGroup(groupId int, name string, showName string) (UAC, error) {
+func (c *Client) ModifyGroup(groupId int, name string, showName string) (UAC, error) {
 	var result struct {
 		Data []UAC `json:"data"`
 	}
@@ -71,7 +71,7 @@ func (c *Conf) ModifyGroup(groupId int, name string, showName string) (UAC, erro
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Group#delete-uac-group
-func (c *Conf) DeleteGroup(groupId int) (bool, error) {
+func (c *Client) DeleteGroup(groupId int) (bool, error) {
 	var result struct {
 		Data []struct {
 			Success bool `json:"success"`
