@@ -93,12 +93,9 @@ func ValidateAccessTokenAlt(token string) (bool, error) {
 func InspectAccesstoken(token string) (AccessTokenLocal, error) {
 	tokenSplit := strings.Split(token, ".")
 	var tokenData AccessTokenLocal
-	tokenDataStr, err := base64.StdEncoding.DecodeString(tokenSplit[1])
-	if err != nil {
-		return AccessTokenLocal{}, err
-	}
+	tokenDataStr, _ := base64.StdEncoding.DecodeString(tokenSplit[1])
 
-	if json.Unmarshal(tokenDataStr, &tokenData) != nil {
+	if err := json.Unmarshal(tokenDataStr, &tokenData); err != nil {
 		return AccessTokenLocal{}, err
 	}
 
