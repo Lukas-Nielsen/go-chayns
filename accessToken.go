@@ -1,6 +1,8 @@
 package chayns
 
 import (
+	"encoding/base64"
+	"encoding/json"
 	"fmt"
 	"strings"
 	"time"
@@ -12,7 +14,7 @@ type permission struct {
 	Data []string `json:"permissions"`
 }
 
-type AccessToken struct {
+type AccessTokenServer struct {
 	LocationID     int       `json:"locationId"`
 	DeveloperID    int       `json:"developerId"`
 	TappID         int       `json:"tappId"`
@@ -29,6 +31,22 @@ type AccessToken struct {
 	} `json:"tokenType"`
 }
 
+type AccessTokenLocal struct {
+	Jti         string    `json:"jti,omitempty"`
+	Sub         string    `json:"sub,omitempty"`
+	Type        int       `json:"type,omitempty"`
+	Exp         time.Time `json:"exp,omitempty"`
+	Iat         time.Time `json:"iat,omitempty"`
+	LocationID  int       `json:"LocationID,omitempty"`
+	SiteID      string    `json:"SiteID,omitempty"`
+	IsAdmin     bool      `json:"IsAdmin,omitempty"`
+	TobitUserID int       `json:"TobitUserID,omitempty"`
+	PersonID    string    `json:"PersonID,omitempty"`
+	FirstName   string    `json:"FirstName,omitempty"`
+	LastName    string    `json:"LastName,omitempty"`
+	Prov        int       `json:"prov,omitempty"`
+}
+
 // https://github.com/TobitSoftware/chayns-backend/wiki/Authorization
 func (c *Client) NewPageAccessToken(pem ...string) (string, error) {
 	var result struct {
@@ -43,17 +61,17 @@ func (c *Client) NewPageAccessToken(pem ...string) (string, error) {
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-AccessToken#read-accesstoken
-func (c *Client) ValidateAccessToken(token string, uac ...int) (AccessToken, error) {
+func (c *Client) ValidateAccessToken(token string, uac ...int) (AccessTokenServer, error) {
 	path := "/AccessToken"
 	if len(uac) > 0 {
 		path += "?RequiredUacGroups=" + strings.Join(strings.Split(fmt.Sprint(uac), " "), ",")
 	}
 
 	var result struct {
-		Data []AccessToken `json:"data"`
+		Data []AccessTokenServer `json:"data"`
 	}
 	if err := c.bearerRequest(token, &result, path, nil, get); err != nil {
-		return AccessToken{}, err
+		return AccessTokenServer{}, err
 	}
 	return result.Data[0], nil
 }
@@ -70,4 +88,19 @@ func ValidateAccessTokenAlt(token string) (bool, error) {
 		return false, err
 	}
 	return true, nil
+}
+
+func InspectAccesstoken(token string) (AccessTokenLocal, error) {
+	tokenSplit := strings.Split(token, ".")
+	var tokenData AccessTokenLocal
+	tokenDataStr, err := base64.StdEncoding.DecodeString(tokenSplit[1])
+	if err != nil {
+		return AccessTokenLocal{}, err
+	}
+
+	if json.Unmarshal(tokenDataStr, &tokenData) != nil {
+		return AccessTokenLocal{}, err
+	}
+
+	return tokenData, nil
 }
