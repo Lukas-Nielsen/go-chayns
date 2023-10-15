@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strings"
 	"time"
+
+	"github.com/go-resty/resty/v2"
 )
 
 type permission struct {
@@ -54,4 +56,18 @@ func (c *Conf) ValidateAccessToken(token string, uac ...int) (AccessToken, error
 		return AccessToken{}, err
 	}
 	return result.Data[0], nil
+}
+
+func (c *Conf) ValidateAccessTokenAlt(token string) (bool, error) {
+	client := resty.New()
+
+	resp, err := client.R().
+		SetHeader("Authorization", "Bearer "+token).
+		SetHeader("User-Agent", useragent).
+		Head("https://auth.tobit.com/v2/token/validate")
+
+	if resp.StatusCode() != 200 {
+		return false, err
+	}
+	return true, nil
 }
