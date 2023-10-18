@@ -72,13 +72,8 @@ func (c *Client) ModifyGroup(groupId int, name string, showName string) (UAC, er
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Group#delete-uac-group
 func (c *Client) DeleteGroup(groupId int) (bool, error) {
-	var result struct {
-		Data []struct {
-			Success bool `json:"success"`
-		} `json:"data"`
-	}
-	if err := c.basicRequest(&result, "/UAC/"+fmt.Sprint(groupId), nil, delete); err != nil {
+	if err := c.basicRequest(nil, "/UAC/"+fmt.Sprint(groupId), nil, delete); err != nil {
 		return false, err
 	}
-	return result.Data[0].Success, nil
+	return true, nil
 }
