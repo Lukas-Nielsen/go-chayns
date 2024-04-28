@@ -34,7 +34,7 @@ func (c *Client) RenameGroup(gid int, name string, sid string) (Group, error) {
 }
 
 // gid = id of group
-func (c *Client) DeleteGroup(gid int) error {
+func (c *Client) DeleteGroup(gid int, deleteCodes bool) error {
 	var res Group
-	return c.request(&res, fmt.Sprintf("Group/%d", gid), nil, DELETE)
+	return c.request(&res, fmt.Sprintf("Group/%d?deleteCodes=%t", gid, deleteCodes), nil, DELETE)
 }
