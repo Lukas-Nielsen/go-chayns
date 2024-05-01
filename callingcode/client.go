@@ -67,11 +67,11 @@ func (c *Client) request(result any, path string, data any, method method) error
 			Patch(path)
 
 	case GET:
-		_, err = req.
+		resp, err = req.
 			Get(path)
 
 	case DELETE:
-		_, err = req.
+		resp, err = req.
 			Delete(path)
 	}
 	if err != nil {
