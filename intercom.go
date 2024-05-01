@@ -2,7 +2,7 @@ package chayns
 
 import "fmt"
 
-type uintercom struct {
+type Intercom struct {
 	client              *Client
 	Message             string  `json:"Message"`
 	UacIds              []int   `json:"UacIds,omitempty"`
