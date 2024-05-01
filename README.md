@@ -4,7 +4,7 @@ package to wrap the api of [chanys®](https://chayns.net/), you can find the doc
 
 ## used packages
 
--   [Resty](https://github.com/go-resty/resty)
+- [Resty](https://github.com/go-resty/resty)
 
 ## getting started
 
@@ -154,10 +154,10 @@ result, err := c.PushGroup(<groupId>, "<message>")
 result, err := c.PushUser(<userId>, "<message>")
 ```
 
-#### intercom
+#### uintercom
 
 ```go
-// intercom
+// uintercom
 i := c.NewIntercom("<message>")
 
 i.

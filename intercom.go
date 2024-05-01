@@ -2,7 +2,7 @@ package chayns
 
 import "fmt"
 
-type Intercom struct {
+type uintercom struct {
 	client              *Client
 	Message             string  `json:"Message"`
 	UacIds              []int   `json:"UacIds,omitempty"`
@@ -21,7 +21,7 @@ type image struct {
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Intercom
 func (c *Client) NewIntercom(msg string) *Intercom {
 	return &Intercom{
-		client:         c,
+		client:       c,
 		Message:      msg,
 		UseGroupChat: false,
 	}

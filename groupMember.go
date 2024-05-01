@@ -6,7 +6,7 @@ import (
 )
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Group-Member#get-all-uac-members
-func (c *Client) Members(groupId int, filter ...map[string]string) ([]User, error) {
+func (c *Client) Members(groupId uint, filter ...map[string]string) ([]User, error) {
 	filterString := ""
 	if len(filter) == 1 && len(filter[0]) > 0 {
 		params := url.Values{}
@@ -26,7 +26,7 @@ func (c *Client) Members(groupId int, filter ...map[string]string) ([]User, erro
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Group-Member#get-uac-member
-func (c *Client) Member(groupId int, userId int) (User, error) {
+func (c *Client) Member(groupId uint, userId uint) (User, error) {
 	var result struct {
 		Data []User `json:"data"`
 	}
@@ -37,7 +37,7 @@ func (c *Client) Member(groupId int, userId int) (User, error) {
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Group-Member#add-user-to-uac-group
-func (c *Client) AddUserUac(groupId int, userId int) (User, error) {
+func (c *Client) AddUserUac(groupId uint, userId uint) (User, error) {
 	var result struct {
 		Data []User `json:"data"`
 	}
@@ -48,7 +48,7 @@ func (c *Client) AddUserUac(groupId int, userId int) (User, error) {
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Group-Member#delete-user-from-uac-group
-func (c *Client) RemoveUserUac(groupId int, userId int) (bool, error) {
+func (c *Client) RemoveUserUac(groupId uint, userId uint) (bool, error) {
 	var result struct {
 		Data []struct {
 		} `json:"data"`

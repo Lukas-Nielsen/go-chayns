@@ -31,7 +31,7 @@ func (c *Client) Groups(filter ...map[string]string) ([]UAC, error) {
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Group#get-uac-group
-func (c *Client) Group(groupId int) (UAC, error) {
+func (c *Client) Group(groupId uint) (UAC, error) {
 	var result struct {
 		Data []UAC `json:"data"`
 	}
@@ -60,7 +60,7 @@ func (c *Client) NewGroup(name string, showName string) (UAC, error) {
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Group#modify-uac-group
-func (c *Client) ModifyGroup(groupId int, name string, showName string) (UAC, error) {
+func (c *Client) ModifyGroup(groupId uint, name string, showName string) (UAC, error) {
 	var result struct {
 		Data []UAC `json:"data"`
 	}
@@ -71,7 +71,7 @@ func (c *Client) ModifyGroup(groupId int, name string, showName string) (UAC, er
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Group#delete-uac-group
-func (c *Client) DeleteGroup(groupId int) (bool, error) {
+func (c *Client) DeleteGroup(groupId uint) (bool, error) {
 	if err := c.basicRequest(nil, "/UAC/"+fmt.Sprint(groupId), nil, delete); err != nil {
 		return false, err
 	}

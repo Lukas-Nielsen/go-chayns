@@ -4,10 +4,10 @@ type location struct {
 	AppName           string `json:"appName"`
 	Name              string `json:"name"`
 	SiteID            string `json:"siteId"`
-	LocationID        int    `json:"locationId"`
-	CountMember       int    `json:"countMember"`
-	AndroidAppVersion int    `json:"androidAppVersion"`
-	IosAppVersion     int    `json:"iosAppVersion"`
+	LocationID        uint   `json:"locationId"`
+	CountMember       uint   `json:"countMember"`
+	AndroidAppVersion uint   `json:"androidAppVersion"`
+	IosAppVersion     uint   `json:"iosAppVersion"`
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-Location

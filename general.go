@@ -1,8 +1,8 @@
 package chayns
 
 type config struct {
-	locationID int
-	tappID     int
+	locationID uint
+	tappID     uint
 	secret     string
 }
 
@@ -10,7 +10,7 @@ type Client struct {
 	c config
 }
 
-func NewClient(location int) *Client {
+func NewClient(location uint) *Client {
 	return &Client{
 		c: config{
 			locationID: location,
@@ -18,12 +18,12 @@ func NewClient(location int) *Client {
 	}
 }
 
-func (c *Client) SetLocation(location int) *Client {
+func (c *Client) SetLocation(location uint) *Client {
 	c.c.locationID = location
 	return c
 }
 
-func (c *Client) SetTapp(tapp int) *Client {
+func (c *Client) SetTapp(tapp uint) *Client {
 	c.c.tappID = tapp
 	return c
 }
@@ -41,9 +41,9 @@ type respError struct {
 type UAC struct {
 	Name        string `json:"name"`
 	ShowName    string `json:"showName"`
-	UserGroupID int    `json:"userGroupId"`
-	CountMember int    `json:"CountMember"`
-	TappID      int    `json:"tappId"`
+	UserGroupID uint   `json:"userGroupId"`
+	CountMember uint   `json:"CountMember"`
+	TappID      uint   `json:"tappId"`
 }
 
 type Device struct {
@@ -52,6 +52,6 @@ type Device struct {
 	LastRequest string `json:"lastRequest"`
 	DeviceToken string `json:"deviceToken"`
 	UDID        string `json:"udid"`
-	DeviceID    int    `json:"deviceId"`
-	AppVersion  int    `json:"appVersion"`
+	DeviceID    uint   `json:"deviceId"`
+	AppVersion  uint   `json:"appVersion"`
 }
