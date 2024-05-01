@@ -30,14 +30,14 @@ and these ones are optional
 
 some have additional attributes
 
-| CC type       | attribute          | type   | required | ref                                                                                     |
-| ------------- | ------------------ | ------ | -------- | --------------------------------------------------------------------------------------- |
-| page          | tappId             | number | true     |                                                                                         |
-| url           | url                | string | true     |                                                                                         |
-| post          | requestUrl         | string | true     |                                                                                         |
-|               | messageFailure     | string | true     |                                                                                         |
-|               | messageBefore      | string | false    |                                                                                         |
-|               | messageSuccess     | string | false    |                                                                                         |
-|               | requestBody        | json   | false    |                                                                                         |
-| iframe dialog | dialogIframeUrl    | string | true     |                                                                                         |
-|               | dialogIframeConfig | json   | false    | [Github tobit.software](https://github.com/TobitSoftware/chayns-js/wiki/Dialogs#iframe) |
+| CC type       | attribute          | type        | required | ref                                                                                     |
+| ------------- | ------------------ | ----------- | -------- | --------------------------------------------------------------------------------------- |
+| page          | tappId             | number      | true     |                                                                                         |
+| url           | url                | string      | true     |                                                                                         |
+| post          | requestUrl         | string      | true     |                                                                                         |
+|               | messageFailure     | string      | true     |                                                                                         |
+|               | messageBefore      | string      | false    |                                                                                         |
+|               | messageSuccess     | string      | false    |                                                                                         |
+|               | requestBody        | json string | false    |                                                                                         |
+| iframe dialog | dialogIframeUrl    | string      | true     |                                                                                         |
+|               | dialogIframeConfig | json string | false    | [Github tobit.software](https://github.com/TobitSoftware/chayns-js/wiki/Dialogs#iframe) |

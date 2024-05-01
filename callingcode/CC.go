@@ -133,7 +133,7 @@ func (c *CC) SetMessageSuccess(messageSuccess string) *CC {
 	return c
 }
 
-func (c *CC) SetRequestBody(requestBody any) *CC {
+func (c *CC) SetRequestBody(requestBody string) *CC {
 	c.config["requestBody"] = requestBody
 
 	return c
@@ -145,7 +145,7 @@ func (c *CC) SetDialogIframeUrl(dialogIframeUrl string) *CC {
 	return c
 }
 
-func (c *CC) SetDialogIframeConfig(dialogIframeConfig any) *CC {
+func (c *CC) SetDialogIframeConfig(dialogIframeConfig string) *CC {
 	c.config["dialogIframeConfig"] = dialogIframeConfig
 
 	return c

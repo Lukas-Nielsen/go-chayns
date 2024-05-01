@@ -8,6 +8,7 @@ import (
 
 type config struct {
 	token string
+	debug bool
 }
 
 type Client struct {
@@ -15,10 +16,11 @@ type Client struct {
 }
 
 // token = chayns user token
-func NewClient(token string) *Client {
+func NewClient(token string, debug bool) *Client {
 	return &Client{
 		c: config{
 			token: token,
+			debug: debug,
 		},
 	}
 }
@@ -38,7 +40,8 @@ func (c *Client) request(result any, path string, data any, method method) error
 	client := resty.New().
 		SetBaseURL(BASE_URL)
 
-	req := client.R().SetDebug(true).
+	req := client.R().
+		SetDebug(c.c.debug).
 		SetAuthToken(c.c.token).
 		SetHeader("User-Agent", UA).
 		SetResult(&result)
