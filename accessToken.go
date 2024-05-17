@@ -15,18 +15,18 @@ type permission struct {
 }
 
 type AccessTokenServer struct {
-	LocationID     uint      `json:"locationId"`
-	DeveloperID    uint      `json:"developerId"`
-	TappID         uint      `json:"tappId"`
+	LocationID     int       `json:"locationId"`
+	DeveloperID    int       `json:"developerId"`
+	TappID         int       `json:"tappId"`
 	Permissions    []string  `json:"permissions"`
-	UserID         uint      `json:"userId"`
+	UserID         int       `json:"userId"`
 	FacebookUserID string    `json:"facevookUserId"`
 	PersonID       string    `json:"personId"`
 	FirstName      string    `json:"firstName"`
 	LastName       string    `json:"lastName"`
 	Expires        time.Time `json:"expires"`
 	TokenType      struct {
-		Type uint   `json:"type"`
+		Type int    `json:"type"`
 		Name string `json:"name"`
 	} `json:"tokenType"`
 }
@@ -34,17 +34,17 @@ type AccessTokenServer struct {
 type AccessTokenLocal struct {
 	Jti         string    `json:"jti,omitempty"`
 	Sub         string    `json:"sub,omitempty"`
-	Type        uint      `json:"type,omitempty"`
+	Type        int       `json:"type,omitempty"`
 	Exp         time.Time `json:"exp,omitempty"`
 	Iat         time.Time `json:"iat,omitempty"`
-	LocationID  uint      `json:"LocationID,omitempty"`
+	LocationID  int       `json:"LocationID,omitempty"`
 	SiteID      string    `json:"SiteID,omitempty"`
 	IsAdmin     bool      `json:"IsAdmin,omitempty"`
-	TobitUserID uint      `json:"TobitUserID,omitempty"`
+	TobitUserID int       `json:"TobitUserID,omitempty"`
 	PersonID    string    `json:"PersonID,omitempty"`
 	FirstName   string    `json:"FirstName,omitempty"`
 	LastName    string    `json:"LastName,omitempty"`
-	Prov        uint      `json:"prov,omitempty"`
+	Prov        int       `json:"prov,omitempty"`
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Authorization

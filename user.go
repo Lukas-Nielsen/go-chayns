@@ -11,9 +11,9 @@ type User struct {
 	Name        string `json:"name"`
 	Picture     string `json:"picture"`
 	Gender      string `json:"gender"`
-	UserID      uint   `json:"userId"`
+	UserID      int    `json:"userId"`
 	PersonID    string `json:"personId"`
-	CountGroups uint   `json:"countGroups"`
+	CountGroups int    `json:"countGroups"`
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-User#get-all-users
@@ -37,7 +37,7 @@ func (c *Client) Users(filter ...map[string]string) ([]User, error) {
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-User#get-user
-func (c *Client) User(userId uint) (User, error) {
+func (c *Client) User(userId int) (User, error) {
 	var result struct {
 		Data []User `json:"data"`
 	}
@@ -48,7 +48,7 @@ func (c *Client) User(userId uint) (User, error) {
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-User#get-uac-groups
-func (c *Client) UserUAC(userId uint, filter ...map[string]string) ([]UAC, error) {
+func (c *Client) UserUAC(userId int, filter ...map[string]string) ([]UAC, error) {
 	filterString := ""
 	if len(filter) == 1 && len(filter[0]) > 0 {
 		params := url.Values{}
@@ -68,7 +68,7 @@ func (c *Client) UserUAC(userId uint, filter ...map[string]string) ([]UAC, error
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-User#get-all-devices-from-user
-func (c *Client) UserDevices(userId uint, filter ...map[string]string) ([]Device, error) {
+func (c *Client) UserDevices(userId int, filter ...map[string]string) ([]Device, error) {
 	filterString := ""
 	if len(filter) == 1 && len(filter[0]) > 0 {
 		params := url.Values{}
@@ -88,7 +88,7 @@ func (c *Client) UserDevices(userId uint, filter ...map[string]string) ([]Device
 }
 
 // https://github.com/TobitSoftware/chayns-backend/wiki/Reference-User#get-device-from-user
-func (c *Client) UserDevice(userId uint, deviceId uint) (Device, error) {
+func (c *Client) UserDevice(userId int, deviceId int) (Device, error) {
 	var result struct {
 		Data []Device `json:"data"`
 	}

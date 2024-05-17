@@ -3,5 +3,5 @@ package callingcode
 type method string
 type icon string
 type ccFormat string
-type ccType uint
-type ccApp uint
+type ccType int
+type ccApp int

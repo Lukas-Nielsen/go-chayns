@@ -154,10 +154,10 @@ result, err := c.PushGroup(<groupId>, "<message>")
 result, err := c.PushUser(<userId>, "<message>")
 ```
 
-#### uintercom
+#### intercom
 
 ```go
-// uintercom
+// intercom
 i := c.NewIntercom("<message>")
 
 i.

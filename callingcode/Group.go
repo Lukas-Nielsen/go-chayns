@@ -8,7 +8,7 @@ type group struct {
 }
 
 type Group struct {
-	ID       uint   `json:"id,omitempty"`
+	ID       int    `json:"id,omitempty"`
 	SiteID   string `json:"siteId,omitempty"`
 	ShowName string `json:"showName,omitempty"`
 }
@@ -27,14 +27,14 @@ func (c *Client) NewGroup(name string, sid string) (Group, error) {
 // name = display nameof group
 //
 // sid = chayns site id
-func (c *Client) RenameGroup(gid uint, name string, sid string) (Group, error) {
+func (c *Client) RenameGroup(gid int, name string, sid string) (Group, error) {
 	var res Group
 	err := c.request(&res, fmt.Sprintf("Group/%d", gid), group{Name: name, SID: sid}, PATCH)
 	return res, err
 }
 
 // gid = id of group
-func (c *Client) DeleteGroup(gid uint, deleteCodes bool) error {
+func (c *Client) DeleteGroup(gid int, deleteCodes bool) error {
 	var res Group
 	return c.request(&res, fmt.Sprintf("Group/%d?deleteCodes=%t", gid, deleteCodes), nil, DELETE)
 }

@@ -6,9 +6,9 @@ import (
 )
 
 type NewCC struct {
-	ID         uint   `json:"id"`
+	ID         int    `json:"id"`
 	Code       string `json:"code"`
-	Type       uint   `json:"type"`
+	Type       int    `json:"type"`
 	TypeString string `json:"typeString"`
 	SiteID     string `json:"siteId"`
 	Name       string `json:"name"`
@@ -103,7 +103,7 @@ func (c *CC) SetUrl(url string) *CC {
 	return c
 }
 
-func (c *CC) SetTappId(tappId uint) *CC {
+func (c *CC) SetTappId(tappId int) *CC {
 	c.config["tappId"] = tappId
 
 	return c
